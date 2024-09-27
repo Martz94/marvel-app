@@ -28,7 +28,6 @@ const MarvelApi = (endpoint) => {
       setLoading(true);
       const cacheKey = `marvel-api-${endpoint}`;
       const cachedData = localStorage.getItem(cacheKey);
-
       if (cachedData) {
         setData(JSON.parse(cachedData));
         setLoading(false);
