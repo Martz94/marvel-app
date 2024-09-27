@@ -1,33 +1,37 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+import MarvelApi from '../api/MarvelApi';
 
 const Comics = () => {
-  const [comics, setComics] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const getComics = async () => {
-      try {
-        const data = await fetchComics();
-        setComics(data.data.results);
-      } catch (error) {
-        setError('Error fetching comics. Please try again later.');
-      }
-    };
-    getComics();
-  }, []);
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
+  const { data: comics, loading, error } = MarvelApi('comics');
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div>
-      <h1 className="text-2xl mb-4">Comics</h1>
-      <ul>
-        {comics.map(comic => (
-          <li key={comic.id}>{comic.title}</li>
+    <div className="container mx-auto px-2 max-w-6xl mt-32">
+      <h2 className="text-3xl font-bold mb-10">Marvel Comics</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {comics.map((comic) => (
+          <div key={comic.id} className="bg-white shadow-lg gap-3 rounded-lg overflow-hidden hover:shadow-red-500 border hover:border-red-500">
+            <img
+              src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+              alt={comic.title}
+              className="w-full h-60 object-cover cursor-pointer relative z-0 scale-110 transition-all duration-300 hover:scale-100"/>
+            <div className="p-4">
+              <h3 className="text-xl font-semibold mb-2">{comic.title}</h3>
+              <p className="text-gray-700 mb-4">
+                {comic.description ? comic.description : 'No description available.'}
+              </p>
+              <a
+                href={`${comic.urls[0]?.url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-2 text-blue-500 hover:underline">
+                Read more
+              </a>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
