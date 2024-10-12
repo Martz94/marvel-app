@@ -3,8 +3,8 @@ import MarvelApi from '../api/MarvelApi';
 
 const Comics = () => {
   const { data: comics, loading, error } = MarvelApi('comics');
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <div className=' text-center mt-48 mx-auto h-screen items-center'><h4 className=' text-lg'>Loading...</h4><img src="/loading.png" alt='image loading' className=' w-16 text-center mx-auto animate-spin animate-infinite'/></div>;
+  if (error) return <div className="text-red-500 text-center mt-48 h-screen">{error}</div>;
 
   return (
     <div className="container mx-auto px-2 max-w-6xl mt-32">

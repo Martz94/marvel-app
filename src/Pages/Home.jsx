@@ -3,8 +3,8 @@ import MarvelApi from '../api/MarvelApi';
 
 const Home = () => {
   const { data: comics, loading, error } = MarvelApi('events');
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (loading) return <div className=' text-center mt-48 mx-auto h-screen items-center'><h4 className=' text-lg'>Loading...</h4><img src="/loading.png" alt='image loading' className=' w-16 text-center mx-auto animate-spin animate-infinite'/></div>;
+  if (error) return <div className="text-red-500 text-center mt-48 h-screen">{error}</div>;
 
   return (
     <div className="container mt-32 xl:mt-36">
@@ -17,10 +17,6 @@ const Home = () => {
         <h3 className='text-2xl md:text-3xl font-semibold text-center my-8 underline bg-gradient-to-r from-red-400 to-red-700 bg-clip-text text-transparent'>Latest Marvel News</h3>
         {comics.slice(0, 10).map((comic) => (
           <div key={comic.id} className=" relative block sm:flex bg-white gap-3 shadow-lg rounded-lg overflow-hidden hover:shadow-red-500 border hover:border-red-500">
-            <img
-              src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-              alt={comic.title}
-              className="w-full sm:w-60 h-56 sm:h-full object-cover cursor-pointer relative z-0 scale-110 transition-all duration-300 hover:scale-100" />
             <div className="p-4">
               <h3 className="text-xl font-semibold mb-2">{comic.title}</h3>
               <p className="text-gray-700 mb-4">
